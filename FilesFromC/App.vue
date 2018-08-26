@@ -3,7 +3,7 @@
      
     <message-component></message-component>
     <v-navigation-drawer
-   
+    
       :mini-variant="miniVariant"
       :clipped="clipped"
       v-model="drawer"
@@ -11,7 +11,7 @@
       fixed
       app
     >
-  <v-list sm3 xs3>
+  <v-list>
       <v-list-tile>
         <v-list-tile-action>
           <v-icon>home</v-icon>
@@ -42,7 +42,7 @@
         </v-list-tile-action>
       <router-link to="/user-profile"  v-if="isLoggedIn">Perfil</router-link>
       </v-list-tile>
-      <v-list-tile v-if="isLoggedInAD">
+      <v-list-tile>
         <v-list-tile-action>
           <v-icon>face</v-icon>
         </v-list-tile-action>
@@ -52,9 +52,9 @@
         <v-list-tile-action>
           <v-icon>replay</v-icon>
         </v-list-tile-action>
-      <router-link :to="'/mirror/'+ cU "  >mirror</router-link>
+      <router-link to="/mirror"  >mirror</router-link>
       </v-list-tile>
-      <v-list-tile v-if="isLoggedInAD">
+      <v-list-tile>
         <v-list-tile-action>
           <v-icon>home</v-icon>
         </v-list-tile-action>
@@ -99,7 +99,7 @@ import { mapActions, mapGetters } from 'vuex';
       clipped: true,
       drawer: false,
       fixed: true,
-      cU: 'gest',
+      
       miniVariant: false,
       right: true,
       rightDrawer: false,
@@ -115,7 +115,7 @@ methods: {
       this.getShoppingCart({uid, currentCart: this.$store.getters.cartItemList});
     },
 	    computed: {
-    ...mapGetters(['isLoggedIn', 'isLoggedInAD', 'cartValue', 'currentUser', 'cartItemList']),
+    ...mapGetters(['isLoggedIn', 'cartValue', 'currentUser', 'cartItemList']),
    
    
     userEmail() {
@@ -129,10 +129,7 @@ methods: {
   #reset-store-panel {
     position: fixed; bottom: 0px; right: 0px;
   }
-	/*aside{
-		width: 20vw;
-		
-	}*/
+
   .margin-left-sm {
     margin-left: 0px;
   }

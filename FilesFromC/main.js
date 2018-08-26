@@ -1,4 +1,4 @@
-//import '@babel/polyfill';
+import '@babel/polyfill';
 //import 'babel-preset-env'
 //import 'babel-core'
 import Vue from 'vue';
@@ -6,9 +6,9 @@ import Vuex from 'vuex';
 var VueFire = require('vuefire')
 
 import './plugins/vuetify'
-//import VueRouter from 'vue-router';
+import VueRouter from 'vue-router';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-import  router  from './routes/routes';
+import { routes } from './routes/routes';
 import store from './store/store';
 import { firebaseListener, LetAuth, fire } from './config/firebaseConfig';
 import clm from "clmtrackr";
@@ -16,17 +16,17 @@ Vue.use(Vuex);
 import App from './App.vue';
  import 'swiper/dist/css/swiper.css';
 Vue.use(VueFire);
-//Vue.use(VueRouter);
+Vue.use(VueRouter);
 Vue.use(clm);
 Vue.use(VueAwesomeSwiper, /* { default global options } */ )
 var googleUser;
 firebaseListener(authStatusChange);
-//require('../public/assets/js/authA');
+require('../public/assets/js/authA');
 //require('./config/firebaseConfigAdmin');
-/*const router = new VueRouter({
-	mode: 'history',
+const router = new VueRouter({
+	/*mode: 'history',*/
 	routes
-});*/
+});
 
 window.firebase = fire;
 /*
@@ -37,11 +37,23 @@ if ('serviceWorker' in navigator) {
   });
 }
 */
-	//store.dispatch('setMewGuser', window.cred);
+	store.dispatch('setMewGuser', window.cred);
+export const rotas = router;
+ router.beforeEach((to, from, next) => {
+     if (to.onlyGuest && store.getters.isLoggedIn) {
+         next('/');
+     } else {
+         next();
+     }
+ });
+ router.beforeEach((to, from, next) => {
+     if (to.onlyAdmin && store.getters.isLoggedInAD) {
+         next('/newp');
+     } else {
+         next();
+     }
+ });
 
-
-
-/*
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
@@ -49,18 +61,17 @@ router.beforeEach((to, from, next) => {
     if (!store.getters.isLoggedIn) {
       next({
         path: '/',
-        //query: { redirect: to.fullPath }
+        query: { redirect: to.fullPath }
       })
     } else {
-      next({ path: to.path })
+      next()
     }
   } else {
     next() // make sure to always call next()!
   }
 })
 
-*/
-require('./IndexedDb/dbdata');
+
 new Vue({
   el: '#app',
   router,
