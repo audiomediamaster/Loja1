@@ -72,7 +72,7 @@ export function listenToProductList({commit}) {
 }
 
 export function listenToTransactionsList({commit}) {
-	return ref.child("transactions/").on('value', (products) => {
+	return ref.child("transactionsList/").on('value', (products) => {
 		console.log(products.val());
 		commit('UPDATE_TRANSACTIONS', products.val());
 	});
@@ -80,7 +80,7 @@ export function listenToTransactionsList({commit}) {
 
 export function getShoppingTransactions({commit}, {currentTransactions}) {
 	
-		return ref.child("transactions/").once('value').then((transactions) => {
+		return ref.child("transactionsList/").once('value').then((transactions) => {
 			 console.log(transactions.val());
 				commit('SET_TRANSACTIONS', transactions.val());
 			if (transactions.val() && (!currentTransactions || currentTransactions.length == 0)) {

@@ -16,8 +16,9 @@
     </div>
   </div>
 
-  <v-container   grid-list-xl v-if="!isProductLoading">
+  <v-container id="appcont" fluid grid-list-md v-if="!isProductLoading">
 
+	
 
   
   		
@@ -25,7 +26,7 @@
     <app-product-item  v-for="prod in products" :item="prod" :key="prod.id" :displayList="displayList"></app-product-item>
    
   
-  
+
 
 	</v-container>
 
@@ -41,7 +42,7 @@ export default {
   data() {
     return {
       loaderColor: "#5cb85c",
-      loaderSize: "50px",
+      loaderSize: "100px",
       displayList: false
     }
   },
@@ -60,12 +61,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped="true" lang="scss">
 .is-flex {
   display: flex;
   flex-wrap: wrap;
 }
 
+	#appcont{
+	display: inline;
+		/*grid-row: auto;*/
+		position: absolute;
+		align-content: center;
+  justify-content: center;
+	float:right;
+		left: 2vw;
+		right:2vw;
+		width: 100vw;
+	
+		
+	}
+	
 .loadingItem {
   align-items: center;
   justify-content: center;
@@ -78,7 +93,8 @@ export default {
 }
 
 .action-panel {
-  margin-bottom: 10px;
+	position: relative;
+  margin-top: 5vh;
   margin-right: 5px;
 }
 </style>

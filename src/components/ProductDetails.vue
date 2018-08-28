@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .caption-full {
   padding-right: 10px;
   padding-left: 10px;

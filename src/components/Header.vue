@@ -3,6 +3,11 @@
     <!-- Brand and toggle get grouped for better mobile display -->
   	<v-toolbar-items class="hidden-xs-only justify-end align-content-center pa-0 ma-0">
     <v-btn id='conf'></v-btn>
+     
+     
+      <v-btn icon @click="handleFullScreen()">
+        <v-icon>fullscreen</v-icon>
+      </v-btn>
       <v-btn class="caption" v-if="isLoggedInAD">AD: {{isLoggedInAD}} </v-btn>
       <v-btn class="caption" v-if="isLoggedInAD">U: {{isLoggedIn}} </v-btn>
       <v-btn v-if="isLoggedIn" class="caption li-pointer"  @click="logout">Logout {{ userEmail }}</v-btn>
@@ -20,6 +25,7 @@
   <!-- /.container -->
 </template>
 <script>
+	import Util from '@/util';
 	import {
 		mapActions,
 		mapGetters
@@ -58,12 +64,16 @@
     }
   },	
 		methods: {
-			...mapActions(['logout'])
+			...mapActions(['logout']),
+				
+				handleFullScreen () {
+      Util.toggleFullScreen();
+    }
 		},
 	}
 
 </script>
-<style scoped lange="sass">
+<style scoped lange="scss">
 	.navbar-btn a {
 		color: white;
 	}

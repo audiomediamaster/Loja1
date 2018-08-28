@@ -154,7 +154,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped="true" lang="scss">
 .list-shopping-cart-leave-active {
   transition: all 0.4s;
 }

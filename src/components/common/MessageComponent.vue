@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .message-bar {
   position: fixed;
   top: 0;

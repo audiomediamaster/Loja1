@@ -11,7 +11,7 @@
       fixed
       app
     >
-  <v-list sm3 xs3>
+  <v-list sm3 xs3 md3 lg3>
       <v-list-tile>
         <v-list-tile-action>
           <v-icon>home</v-icon>
@@ -73,7 +73,7 @@
       <v-spacer></v-spacer>
      <app-header ></app-header>
     </v-toolbar>
-    <v-content>
+    <v-content class="desrelative">
       <router-view/>
     </v-content>
 
@@ -125,22 +125,20 @@ methods: {
   }		
 
 </script>
-<style scoped="true">
+<style scoped="true" lang="scss">
   #reset-store-panel {
     position: fixed; bottom: 0px; right: 0px;
   }
-	/*aside{
-		width: 20vw;
-		
-	}*/
+	
   .margin-left-sm {
     margin-left: 0px;
   }
   html, body {
-   /* height: 100%;*/
+  
   }
+	
   .wrapper1 {
-    min-height: 100%;
+    min-height: 80%;
     margin-bottom: -50px;
     padding-bottom: 50px;
   }

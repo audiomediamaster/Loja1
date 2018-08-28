@@ -1,19 +1,19 @@
 <template>
 
 
-<v-container class="floatL" :class="{'list-group-item': displayList}">
-            <v-flex xs12 sm6 md6>
-              <v-card  class="white--black ">
+<div  class="pi " :class="{'list-group-item': displayList}">
+            <v-flex >
+              <v-card id="poc" width="18vw" class="back--text grey lighten-3 my-1 mx-1">
                 <v-layout>
-                  <v-flex xs5>
+                  <v-flex >
                     <v-card-media
                       :src="item.thumbnail_url"
-                      height="125px"
+                      height="10vh"
                       contain
                       	alt="" 
                       	class="grow thumbnail-image"
                     ></v-card-media>
-                <v-divider dark></v-divider>
+            
                     <h4 class="ml-3">${{ item.price }}</h4>
                   </v-flex>
                   <v-flex xs7>
@@ -27,23 +27,23 @@
                     </v-card-title>
                   </v-flex>
                 </v-layout>
-                <v-divider light></v-divider>
+              
                 <v-card-actions class="pa-3">
-                    <button class="btn btn-success btp" :disabled="item.quantity === 0" @click="addItem">
+                    <v-btn  class=" green btp" :disabled="item.quantity === 0" @click="addItem">
                         Add to cart
-                    </button>
+                    </v-btn>
                   <v-spacer></v-spacer>
-                  <span class="stock">{{ item.quantity }} left in stock</span>
-                  <v-spacer></v-spacer>
-                  <v-icon>star_border</v-icon>
-                  <v-icon>star_border</v-icon>
-                  <v-icon>star_border</v-icon>
-                  <v-icon>star_border</v-icon>
-                  <v-icon>star_border</v-icon>
+                  <v-flex sx6>
+                  	
+                  <span class="stock pull-right">{{ item.quantity }} left in stock</span>
+                  <v-divider ></v-divider>
+                  <v-icon class="pull-right">star_border</v-icon>
+               
+                  </v-flex>
                 </v-card-actions>
               </v-card>
             </v-flex>
-</v-container>
+</div>
 	
 
 
@@ -81,26 +81,27 @@ export default {
 }
 </script>
 
-<style scoped>
-.thumbnail {
- 
-	/*width: 30vw;*/
-	/*height: 30vw;*/
+<style scoped lang="scss">
+.pi {
+	position: relative;
+	margin: 0.3vw;
+ float: left;
+	width: auto;
+	
 	
 }
-	.floatL{
-		float: left;
-		/*width: 50vw;*/
-		
+	#poc{
+		position: relative;
+		min-width: 20em;
+		padding: 0;
 	}
 .favourite-icon {
   font-size: 10px;
 }
 
 .stock {
-	margin: 0;
-  padding-right: 10px;
-  padding-left: 10px;
+	margin: 1px;
+
   color: #d17581;
 	 float: left;
 }
@@ -110,44 +111,40 @@ export default {
   display:block;
 }
 .grow {
+
   transition: all .2s ease-in-out;
 }
 
 .thumbnail:hover .grow {
+	
   transform: scale(1.1);
 }
 
-.item.list-group-item {
-  border: none;
-	border-radius: 5px;
-  float: left;
-/*  width: 100%;
-	height: auto;*/
-  background-color: #fff;
-  margin-bottom: 10px;
+	.truncate .caption{
+		display: block;
+		
+	}
+	
+	
+.list-group-item {
+ padding: 1%;
+    float: left;
+     width: 40%;
+	height: auto;
+	
+	#poc {
+		
+	 width: 80% !important;	
+	}
+
 }
 
 .grow .thumbnail-image {
 	width: 15vw;
 	height: auto !important;
-  padding: 15px;
-}
-
-.list-group-item .thumbnail-image {
-  margin-right: 10px;
-  max-height: 150px;
-}
-
-.item.list-group-item .thumbnail {
-  margin-bottom: 0px;
 
 }
 
-.item.list-group-item img {
-  float: left;
-}
 
-.item.list-group-item:after {
-  clear: both;
-}
+
 </style>
