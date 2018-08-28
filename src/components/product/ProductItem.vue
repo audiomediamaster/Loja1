@@ -54,17 +54,24 @@
 
 <script>
 import {
-  mapActions
+  mapActions,
+	 mapGetters
 } from 'vuex';
 export default {
   props: ['item', 'displayList'],
+	computed: { ...mapGetters([ 'isLoggedIn', 'currentUser']),
+			  },
+			   
   methods: {
     ...mapActions(['updateCart']),
     addItem() {
+
+	  
       const order = {
         item: Object.assign({}, this.item),
         quantity: 1,
-        isAdd: true
+        isAdd: true,
+
       };
       this.updateCart(order);
     }

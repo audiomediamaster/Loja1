@@ -16,15 +16,38 @@
           hide-actions
           class="elevation-0 table-striped"
         >
-          <template v-for="item in items" slot="items" slot-scope="props">
-            <td >  aaa{{
-            }} </td>
+          <template  slot="items" slot-scope="props">
 
-  <td v-for="(item, index, i, data) in props.item"  >{{index}}</td>
-  <td v-for="(item, index) in props.item"  >{{ item.length}}</td>
-  <td v-for="(value, key, index) in props.item"  >{{ value }}</td>
-  <td v-for="(value, key, indexx) in props.item"  >{{indexx }}</td>
-  <td v-for="(value, key, index) in item"  >x{{value[0] }}</td>
+ 
+  <td v-for="(item, uid, i, data) in props.item"  >{{uid}}</td>
+    <td >
+    <div v-for="(value, key, index) in props.item" >
+    	
+    {{ --items.length }}
+    	
+    </div>
+    
+    </td>      
+  
+  <td v-for="(valuex, key, index) in props.item"  >
+ 
+  	<v-card v-for="(item, key, index) in valuex" :key="item.id">
+  		
+  	{{item.id}} <v-divider ></v-divider>
+  	</v-card>
+  
+  </td>
+  
+ 	  <td v-for="(value, key, index) in props.item"  >
+  	  <app-ordens-item   v-for="(value, key, index) in value" :cartItem="value" :key="value.key"></app-ordens-item>
+  	  </td>
+
+  	 
+
+
+  	
+
+
 
           </template>
         </v-data-table>
@@ -38,7 +61,12 @@ import {
   mapActions,
   mapGetters
 } from 'vuex';
+	
+	import OrdensItem from './OrdensItem';
 export default {
+	components:{
+		appOrdensItem: OrdensItem
+	},
   data () {
     return {
       headers: [
@@ -46,16 +74,16 @@ export default {
           text: '#',
           align: 'left',
           sortable: false,
-          value: '0'
+          value: 'uid'
         },
-        { text: 'User', value: 'deadline' },
+        { text: 'User', value: 'id' },
         { text: 'QTDProduc', value: 'progress' },
-        { text: 'Description', value: 'status' },
-        { text: 'Status2', value: 'status' },
-        { text: 'Status3', value: 'status' },
+        { text: 'Description', value: 'description' },
+        { text: 'Status2', value: 'status2' },
+        { text: 'Status3', value: 'status3' },
       ],
      // items: {},
-		indexA:2,
+		indexA:0,
       colors: {
         processing: 'blue',
         sent: 'red',
@@ -72,10 +100,16 @@ export default {
 	items(){
 		return  this.transactionsItemList;
 	},
-	ecal(){
-		
-		return 0;
-	}
+	totalValue() {
+				let res = [];
+		let tt ;
+				this.transactionsItemList.map(item => {
+					res.push(item);
+				});
+		console.log(res);
+				
+				return res;
+			}
   },
   methods: {
 	  ...mapActions(['listenToTransactionsList']),
@@ -89,3 +123,8 @@ export default {
 	  }
 };
 </script>
+
+<!-- 
+  <td v-for="(item, index) in props.item"  >{{ item.length}}</td>
+  <td v-for="(value, key, index) in props.item"  >{{ value }}</td>
+  <td v-for="(value, key, indexx) in props.item"  >{{indexx }}</td>-->

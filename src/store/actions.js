@@ -140,7 +140,9 @@ export function saveToTransaction(_, {uid, user, cartItemList}) {
 	var newTransaction = {}
 	
 	newTransaction['/transactions/' + uid + '/' + newTransactionKey] = cartItemList;
-	
+	 cartItemList.map(item =>{
+		console.log('itemDDDDD',item);
+	})
 	
 	ref.child("transactionsList/").once("value")
   .then(function(snapshot) {

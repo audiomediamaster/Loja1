@@ -107,7 +107,7 @@
           sortable: false,
           value: 'title'
         },
-        { text: 'Id', value: 'idmmm' },
+        { text: 'Id', value: 'id' },
         { text: 'image', value: 'thumbnail_url' },
         { text: 'Mask', value: 'mask_url' },
         /*{ text: 'tile', value: 'title' },*/
