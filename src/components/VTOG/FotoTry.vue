@@ -3,9 +3,9 @@
      	<v-container align-center justify-center>
       	<v-layout align-center justify-center column fill-height mt-3 >
 		<div id="containerx">
-			<canvas id="image" width="160" height="240" ref="canvas"></canvas>
+			<canvas id="image"  ref="canvas"></canvas>
 			<img id="glass" src=""/>
-			<canvas id="overlay" width="160" height="240"></canvas>
+			<canvas id="overlay" ></canvas>
 		</div>
 		<br/>
 	 <v-btn
@@ -142,7 +142,7 @@
 					// do something with the positions ...
 					// print the positions
 					var positionString = "";
-					if (positions) {
+					if (positions && document.getElementById('glass').style != null) {
 						for (var p = 0; p < 71; p++) {
 							ploc = positions[27];
 							ploca = positions[32];
@@ -156,8 +156,9 @@
 							}
 						}
 					}
+					if (positions && document.getElementById('glass').style != null) {
 					var xx2 = Math.atan(((ploca[1] - ploc[1]).toFixed(2)) / ((ploca[0] - ploc[0]).toFixed(2))) * (180 / Math.PI);
-					document.getElementById('glass').style.transform = "rotateZ(" + (xx2.toFixed(2)) + "deg)";
+					document.getElementById('glass').style.transform = "rotateZ(" + (xx2.toFixed(2)) + "deg)";}
 				}
 				// detect if tracker fails to find a face
 				document.addEventListener("clmtrackrNotFound", function(event) {
@@ -282,7 +283,7 @@
 	}
 
 </script>
-<style scoped>
+<style scoped lang="scss">
 	@import url(https://fonts.googleapis.com/css?family=Lato:300italic,320italic,300,320);
 	#overlay {
 		position: absolute;

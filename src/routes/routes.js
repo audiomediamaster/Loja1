@@ -13,6 +13,7 @@ import Mirror from '../components/VTOG/MirrorTry.vue';
 import NewP from '../components/admin/NewProducts.vue';
 import Ordens from '../components/admin/Ordens.vue';
 import ProfileUser from '../components/users/ProfileUser.vue';
+import Test from '../components/pagetest/Test.vue';
 Vue.use(VueRouter)
  const routes = [
 	{path: '/', component: Store, name: 'mainpage'},
@@ -28,6 +29,7 @@ Vue.use(VueRouter)
         requiresAuth: true
       }},
 	{path: '/login', component: Login, name: 'login' },
+	{path: '/test', component: Test, name: 'test' },
 	{path: '/register', component: Register, name: 'register'},
 	{path: '*', redirect: '/' }
 ];

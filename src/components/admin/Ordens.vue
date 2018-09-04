@@ -1,18 +1,21 @@
 <template>
   <v-card>
-    <v-toolbar card dense color="transparent">
-      <v-toolbar-title><h4>Order</h4></v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>more_vert</v-icon>
-      </v-btn>      
-    </v-toolbar>
+   <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
       <template>
+   
+         
         <v-data-table
           :headers="headers"
           :items="items"
+          :search="search"
           hide-actions
           class="elevation-0 table-striped"
         >
@@ -20,37 +23,61 @@
 
  
   <td v-for="(item, uid, i, data) in props.item"  >{{uid}}</td>
+  
     <td >
     <div v-for="(value, key, index) in props.item" >
     	
-    {{ --items.length }}
+    {{ --items.length + 1}}
     	
     </div>
     
     </td>      
-  
-  <td v-for="(valuex, key, index) in props.item"  >
+<!--    
+ <td   > 
+ 	<v-card v-for="(values, key, index) in props.item" :valuesx="totalValue(values)">
+ 		
+ 	  x {{valuesx}}
+ 	</v-card>
+ 	  
+ 	  
+ 	  </td>
+  -->
+
  
-  	<v-card v-for="(item, key, index) in valuex" :key="item.id">
-  		
-  	{{item.id}} <v-divider ></v-divider>
-  	</v-card>
+
   
-  </td>
   
- 	  <td v-for="(value, key, index) in props.item"  >
-  	  <app-ordens-item   v-for="(value, key, index) in value" :cartItem="value" :key="value.key"></app-ordens-item>
-  	  </td>
-
-  	 
-
-
+ 	 <!-- <td v-for="(values, key, index) in props.item"  >
+  	  <app-ordens-item   v-for="(value, key, index) in values" :cartItem="value" :key="value.key" ></app-ordens-item>
   	
+  	  </td>-->
+ 
 
+  	 <td v-for="(values, key, index) in props.item"  >
+ 	    <v-expansion-panel>
+    <v-expansion-panel-content
+    
+    >
+      <div slot="header">Total</div>
+  	  <app-ordens-item   v-for="(value, key, index) in values" :cartItem="value" :key="value.key" ></app-ordens-item>
+  	<tr>
+        <td class="text-center" v-for="(value, key, index) in props.item" :key="value.key" > Total: ${{totalValue(value)}} </td>
+        
+      </tr>
+       
+         </v-expansion-panel-content>
+  </v-expansion-panel> 
+           </td>
+ 	 
+         
 
 
           </template>
+          <v-alert slot="no-results" :value="true" color="error" icon="warning">
+        Your search for "{{ search }}" found no results.
+      </v-alert>
         </v-data-table>
+  	 
       </template>
       <v-divider></v-divider>
     </v-card-text>
@@ -76,46 +103,68 @@ export default {
           sortable: false,
           value: 'uid'
         },
-        { text: 'User', value: 'id' },
-        { text: 'QTDProduc', value: 'progress' },
-        { text: 'Description', value: 'description' },
-        { text: 'Status2', value: 'status2' },
-        { text: 'Status3', value: 'status3' },
+        
+      
+      
+     
+        { text: 'total1', value: 'values' },
+        { text: 'total2', value: 'values' },
+        { text: 'total3', value: 'values' },
+        
+       
       ],
-     // items: {},
+		valuesx:'',
+		valuesxx:'',
+     search:'',
 		indexA:0,
-      colors: {
-        processing: 'blue',
-        sent: 'red',
-        delivered: 'green'
-      }
+      
     };
   },
   computed: {
 	   ...mapGetters(['transactionsItemList']),
-    randomColor () {
-      let item = Math.floor(Math.random() * this.colors.length);
-      return this.colors[item];
-    },
+    
 	items(){
 		return  this.transactionsItemList;
 	},
-	totalValue() {
-				let res = [];
-		let tt ;
-				this.transactionsItemList.map(item => {
-					res.push(item);
+	oi(){
+		
+		for(var usres of this.transactionsItemList ){
+			
+		}
+			console.log(usres);
+		
+		
+		
+		let xxxx =(this.valuesx);
+		//console.log(xxxx);
+	return xxxx;
+},
+	totalValuex(value) {
+				let res = 0;
+				value.map(item => {
+					res += item.price * item.quantity;
 				});
-		console.log(res);
-				
 				return res;
 			}
+	
+				
+		
   },
   methods: {
 	  ...mapActions(['listenToTransactionsList']),
-    getColorByStatus (status) {
-      return this.colors[status];
-    },
+   
+			totalValue(val) {
+				let res = 0;
+					val.map(item => {
+					res += item.price * item.quantity;
+				});
+		
+		
+		
+	//console.log(res);
+			return this.valuesxx= res;
+		//return res;
+			},
   },
 	  created(){
 		  this.listenToTransactionsList();
