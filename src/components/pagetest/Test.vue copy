@@ -1,7 +1,9 @@
 <template>
  <div>
+
+
     <v-toolbar flat color="white">
-      <v-toolbar-title>Edit Products</v-toolbar-title>
+      <v-toolbar-title>Edit transactionsList</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
@@ -59,18 +61,33 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.title }}</td>
-        <td class="text-xs-left">{{ props.item.id }}</td>
-        <td class="text-xs-left"><v-card color="blue-grey darken-2" class="white--text ">
-      <v-img class="img-responsive elevation-20" :src="props.item.thumbnail_url" alt=""  height="50px"></v-img>
-</v-card></td>
-         <td class="text-xs-left"><v-card color="blue-grey darken-2" class="white--text">
-      <v-img class="img-responsive elevation-20" :src="props.item.mask_url" alt=""  height="50px"></v-img>
-</v-card></td>
-      
-        <td class="text-xs-left">{{ props.item.description }}</td>
-        <td class="text-xs-left">{{ props.item.price }}</td>
-        <td class="text-xs-left">{{ props.item.quantity }}</td>
+        <td v-for="(item, uid, i, data) in props.item"  >{{uid}}</td>
+    <td >
+    <div v-for="(value, key, index) in props.item" >
+    	
+    {{ --items.length }}
+    	
+    </div>
+    
+    </td>      
+  
+
+  
+ 	  <td v-for="(value, key, index) in props.item"  >
+ 	    <v-expansion-panel>
+    <v-expansion-panel-content
+    
+    >
+      <div slot="header">Item</div>
+  	  <app-ordens-item   v-for="(value, key, index) in value" :cartItem="value" :key="value.key" ></app-ordens-item>
+  	<tr>
+        <td class="text-center" v-for="(value, key, index) in props.item"v-bind:valuex="totalValue(value)"  > Total{{ oi}} </td>
+        
+      </tr>
+       
+         </v-expansion-panel-content>
+  </v-expansion-panel> 
+           </td>
         <td class="justify-center layout px-0">
           <v-icon
             small
@@ -96,7 +113,16 @@
 
 <script>
 	import { ref, firebaseAuth } from '../../config/firebaseConfig';
+	import {
+  mapActions,
+  mapGetters
+} from 'vuex';
+	
+	import OrdensItem from '../admin/OrdensItem';
 	export default {
+		components:{
+		appOrdensItem: OrdensItem
+	},
     data: () => ({
 		idz:'',
       dialog: false,
@@ -116,6 +142,7 @@
         { text: 'Quantity', value: 'quantity' },
         { text: 'Actions', value: 'name', sortable: false }
       ],
+		valuesx:'',
       desserts: [],
       editedIndex: -1,
       editedItem: {
@@ -141,7 +168,19 @@
     }),
 
     computed: {
+		
+		 ...mapGetters(['transactionsItemList']),
+	
+	items(){
+		return  this.transactionsItemList;
+	},
+oi(){
+	return this.valuesx;
+},
+	
       formTitle () {
+		  
+		  
         return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
       }
     },
@@ -153,15 +192,29 @@
     },
 
     created () {
-		 this.desserts = this.$store.getters.products;
+		 this.listenToTransactionsList();
+		 this.desserts = this.$store.getters.transactionsItemList;
       this.initialize()
     },
 
     methods: {
+		 ...mapActions(['listenToTransactionsList']),
       initialize () {
-        this.desserts = this.$store.getters.products
+        this.desserts = this.$store.getters.transactionsItemList
       },
-
+	totalValue(val) {
+			
+				
+				let res = 0;
+					val.map(item => {
+					res += item.price * item.quantity;
+				});
+		
+		
+		
+	console.log(res);
+			 this.valuesx= res;
+			},
       editItem (item) {
         this.editedIndex = this.desserts.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -171,7 +224,7 @@
       deleteItem (item) {
         const index = this.desserts.indexOf(item)
         confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1);
-		  return ref.child("products/"+ index + '/').remove();
+		  return ref.child("transactionsList/"+ index + '/').remove();
       },
 
       close () {
@@ -188,30 +241,26 @@
 			var ix = this.editedIndex;
 		jk = this.editedItem;	
  confirm('Are you sure you want to UPDATE this item?') &&  Object.assign(this.desserts[this.editedIndex], this.editedItem);
-ref.child("products/").once("value")
+ref.child("transactionsList/").once("value")
   .then(function(snapshot) {
   var idz = snapshot.val().length; // {first:"Ada",last:"Lovelace"}
-   // var firstName = snapshot.child("name/first").val(); // "Ada"
-   // var lastName = snapshot.child("name").child("last").val(); // "Lovelace"
-   // var age = snapshot.child("age").val(); // null
+
 	console.log(idz);
 	
-	return ref.child("products/"+ ix + '/').update(jk);
+	return ref.child("transactionsList/"+ ix + '/').update(jk);
   });
 
         } else {
           this.desserts.push(this.editedItem)
 		var jj = {};
 		jj = this.editedItem;	
-ref.child("products/").once("value")
+ref.child("transactionsList/").once("value")
   .then(function(snapshot) {
    var idz = snapshot.val().length; // {first:"Ada",last:"Lovelace"}
-   // var firstName = snapshot.child("name/first").val(); // "Ada"
-   // var lastName = snapshot.child("name").child("last").val(); // "Lovelace"
-   // var age = snapshot.child("age").val(); // null
+ 
 	console.log(idz);
 	
-	return ref.child("products/"+ idz + '/').set(jj);
+	return ref.child("transactionsList/"+ idz + '/').set(jj);
   });
 
         }
@@ -220,11 +269,7 @@ ref.child("products/").once("value")
     }
   }
 	
-	/*function saveToTransaction(_, {uid, cartItemList}) {
-	let newTransactionKey = ref.child("transactions").push().key;
-	var newTransaction = {}
-	newTransaction['/transactions/' + uid + '/' + newTransactionKey] = cartItemList;
-	return ref.update(newTransaction);*/
+	
 </script>
 
 <style>

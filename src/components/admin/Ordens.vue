@@ -32,25 +32,7 @@
     </div>
     
     </td>      
-<!--    
- <td   > 
- 	<v-card v-for="(values, key, index) in props.item" :valuesx="totalValue(values)">
- 		
- 	  x {{valuesx}}
- 	</v-card>
- 	  
- 	  
- 	  </td>
-  -->
 
- 
-
-  
-  
- 	 <!-- <td v-for="(values, key, index) in props.item"  >
-  	  <app-ordens-item   v-for="(value, key, index) in values" :cartItem="value" :key="value.key" ></app-ordens-item>
-  	
-  	  </td>-->
  
 
   	 <td v-for="(values, key, index) in props.item"  >

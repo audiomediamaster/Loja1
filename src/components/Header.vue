@@ -8,12 +8,15 @@
       <v-btn icon @click="handleFullScreen()">
         <v-icon>fullscreen</v-icon>
       </v-btn>
+     <v-btn class="caption" v-on:click="$emit('welcome')"  ><a>tt</a></v-btn>
+      
       <v-btn class="caption" v-if="isLoggedInAD">AD: {{isLoggedInAD}} </v-btn>
       <v-btn class="caption" v-if="isLoggedInAD">U: {{isLoggedIn}} </v-btn>
       <v-btn v-if="isLoggedIn" class="caption li-pointer"  @click="logout">Logout {{ userEmail }}</v-btn>
       <v-btn class="caption" to="/" >Online Store</v-btn>
       <v-btn class="caption" to="/register"  v-if="false"  ><a>Register</a></v-btn>
       <v-btn class="caption" to="/foto"   v-if="isLoggedInAD"><a>foto</a></v-btn>
+      <v-btn class="caption" to="/foto2"  ><a>foto2</a></v-btn>
       <v-btn class="caption" :to="'/mirror/'+  us "  ><a>mirror</a></v-btn>
       <v-btn class="caption" to="/ordens"  v-if="isLoggedInAD"><a>ordens</a></v-btn>
         <v-btn class="caption" to="/cart">

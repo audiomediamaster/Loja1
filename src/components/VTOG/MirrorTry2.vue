@@ -84,9 +84,9 @@
 	var ctrack = new clm.tracker();
 	
 	var ctrack = new clm.tracker({
-		searchWindow: 11,
+		searchWindow: 13,
 		stopOnConvergence: false,
-		scoreThreshold: 0.8
+		scoreThreshold: 0.5
 	});
 				ctrack.init();
 	export default {
@@ -341,39 +341,45 @@
 		position: absolute;
 		top: 0px;
 		left: 0px;
-		-o-transform: scaleX(1);
-		-webkit-transform: scaleX(1);
+		margin: 0;
+		
+
 		transform: scaleX(1);
-		-ms-filter: fliph;
-		/*IE*/
-		filter: fliph;
-		/*IE*/
+		-webkit-transform: scaleX(1);
+		transform: scaleY(1);
+		-webkit-transform: scaleY(1);
+
+		-moz-transform: scaleX(1);
+		-o-transform: scaleX(1);
+		filter: FlipH;
+		-ms-filter: "FlipH";
+		image-orientation: flip;
 	}
 
 	#videoel {
+		margin: 0;
 		top: 0px;
-		left: 0px;
-		-o-transform: scaleX(1);
-		-webkit-transform: scaleX(1);
+		
+
 		transform: scaleX(1);
-		-ms-filter: fliph;
-		/*IE*/
-		filter: fliph;
-		/*IE*/
+		-webkit-transform: scaleX(1);
+		transform: scaleY(1);
+		-webkit-transform: scaleY(1);
+		left: 0px;
+		-moz-transform: scaleX(1);
+		-o-transform: scaleX(1);
+		filter: FlipH;
+		-ms-filter: "FlipH";
+		image-orientation: flip;
 	}
 
 	#container1 {
 		position: relative;
-		width: auto;
+		width: flex;
 		/*margin : 0px auto;*/
 	}
 
-	#content1 {
-		margin-top: 70px;
-		margin-left: 5px;
-		margin-right: 100px;
-		max-width: 950px;
-	}
+	
 
 	h2 {
 		font-weight: 400;
@@ -397,8 +403,11 @@
 	}
 
 	#glass1 {
-		margin: 0;
 		position: absolute;
+		top: 0px;
+		left: 0px;
+		margin: 0;
+		z-index: auto;
 	}
 	.swiper-slide {
 		background-position: center;

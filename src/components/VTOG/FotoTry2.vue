@@ -1,73 +1,89 @@
 <template>
-    <div id="contentx" v-if="isAuthenticated">
-     	<v-container align-center justify-center>
-      	<v-layout align-center justify-center column fill-height mt-3 >
-		<div id="containerx">
-		<video id="video" width="300" height="400" preload="auto" loop playsinline autoplay ref="video" v-show="true">
-			</video>
-			<canvas id="image" width="300" height="400" ref="canvas"></canvas>
-			<img id="glass" src=""/>
-			<canvas id="overlay" width="300" height="400" ></canvas>
-	
-		</div>
-		<br/>
-	 <v-btn
-      color="blue-grey"
-      class="white--text btn1"
-     @click="uploadA"
-    >Upload
-	<input  type="file"  accept="image/*" capture="user" id="files" name="files[]" style="display:none;" />
-      <v-icon right dark>cloud_upload</v-icon>
-    </v-btn>
-    <v-btn id="snap">Snap Photo</v-btn>
-    <v-btn
-      color="blue-grey"
-      class="white--text btn1"
-     @click="rotate"
-		   >rotate	</v-btn>
-		<p id="convergence"></p>
-		<p id="positions"></p>
-    <v-flex md6  align-center justify-center>
-		<swiper :options="swiperOption">
-        <swiper-slide v-for="(item,i) in items"
-        class="mb-5 px-5 align-center justify-space-between row fill-height"
-      :key="i" >
-    <v-flex xs6 offset-xs3>
-    	  <v-card
-    	  >
-        <v-img
-          :src="item.thumbnail_url"
-          height="150px"
-         contain
-         @click="animateClean(item.thumbnail_url)"
-        >
-        </v-img>
-        <v-card-title primary-title>
-          <div>
-            <div class="headline">{{item.title }}</div>
-            <span class="grey--text">{{item.title }}</span>
-          </div>
-        </v-card-title>
-        <v-card-actions class="d-inline-block align-end align-content-end pl-5 ">
-          <v-btn flat>Share</v-btn>
-          <v-btn flat color="purple">Explore</v-btn>
-          <v-btn icon @click="show = !show">
-            <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
-          </v-btn>
-        </v-card-actions>
-        <v-slide-y-transition>
-          <v-card-text v-show="show">
-            {{item.description}}
-          </v-card-text>
-        </v-slide-y-transition>
-      </v-card>
-	</v-flex>
-      </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
-	</v-flex>
-   	  </v-layout>
-     	</v-container>
+	<div id="contentx" v-if="isAuthenticated">
+		<v-container align-center justify-center>
+			<v-layout align-center justify-center column fill-height mt-3>
+				<div id="containerx" class="hide">
+					<canvas id="image" width="300" height="400" ref="canvas"></canvas>
+					<img id="glass" src="" />
+					<canvas id="overlay" width="300" height="400"></canvas>
+				</div>
+				<br />
+				 <v-flex xs8 >
+        <v-card class="card--flex-toolbar">
+          <v-toolbar card prominent>
+            <v-btn color="blue-grey" class="white--text btn1" @click="uploadA">Upload
+					<input type="file" accept="image/*" capture="user" id="files" name="files[]" style="display:none;" />
+					<v-icon right dark>cloud_upload</v-icon>
+				</v-btn>
+				<v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+					<v-btn slot="activator" color="blue-grey" class="white--text btn1" >Foto</v-btn>
+					<v-card>
+						<v-toolbar dark color="primary">
+							<v-btn icon dark @click.native="dialog = false">
+								<v-icon>close</v-icon>
+							</v-btn>
+							<v-toolbar-title>Settings</v-toolbar-title>
+							<v-spacer></v-spacer>
+							<v-toolbar-items>
+								<v-btn dark flat @click.native="dialog = false">Save</v-btn>
+							</v-toolbar-items>
+						</v-toolbar>
+						<v-list three-line subheader>
+							<v-container fluid>
+								<v-layout id="ctx" column align-center>
+									<video id="video" width="300" height="400" preload="auto" loop playsinline autoplay ref="video" v-show="true">
+									</video>
+									<v-divider></v-divider>
+									<v-btn id="snap" @click.native="dialog = false">Snap Photo</v-btn>
+								</v-layout>
+							</v-container>
+						</v-list>
+					</v-card>
+				</v-dialog>
+				<v-btn color="blue-grey" class="white--text btn1" @click="rotate">rotate </v-btn>
+
+          
+          </v-toolbar>
+
+          
+        </v-card>
+      </v-flex>
+				
+				<p id="convergence"></p>
+				<p id="positions"></p>
+				<v-flex md6 align-center justify-center>
+					<swiper :options="swiperOption">
+						<swiper-slide v-for="(item,i) in items" class="mb-5 px-5 align-center justify-space-between row fill-height" :key="i">
+							<v-flex xs6 offset-xs3>
+								<v-card>
+									<v-img :src="item.thumbnail_url" height="150px" contain @click="animateClean(item.thumbnail_url)">
+									</v-img>
+									<v-card-title primary-title>
+										<div>
+											<div class="headline">{{item.title }}</div>
+											<span class="grey--text">{{item.title }}</span>
+										</div>
+									</v-card-title>
+									<v-card-actions class="d-inline-block align-end align-content-end pl-5 ">
+										<v-btn flat>Share</v-btn>
+										<v-btn flat color="purple">Explore</v-btn>
+										<v-btn icon @click="show = !show">
+											<v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+										</v-btn>
+									</v-card-actions>
+									<v-slide-y-transition>
+										<v-card-text v-show="show">
+											{{item.description}}
+										</v-card-text>
+									</v-slide-y-transition>
+								</v-card>
+							</v-flex>
+						</swiper-slide>
+						<div class="swiper-pagination" slot="pagination"></div>
+					</swiper>
+				</v-flex>
+			</v-layout>
+		</v-container>
 	</div>
 </template>
 <script>
@@ -89,12 +105,15 @@
 	});
 	ctrack.init();
 	export default {
-		name: 'foto',
+		name: 'foto2',
 		data() {
 			return {
-				cW:"180px",
-				cH:"180px",
-				
+				cW: "180px",
+				cH: "180px",
+				dialog: false,
+				notifications: false,
+				sound: true,
+				widgets: false,
 				items: [],
 				show: false,
 				swiperOption: {
@@ -119,16 +138,14 @@
 			uploadA() {
 				document.getElementById('files').click();
 			},
-			rotate(){
-			document.getElementById('image').style.transform = "scaleX(-1)";	
-				document.getElementById('image').style.transform = "rotateZ(90deg)";	
-			document.getElementById('overlay').style.transform = "scaleX(-1)";	
-			document.getElementById('overlay').style.transform = "rotateZ(90deg)";	
-//			document.getElementById('overlay').setAttribute('width', document.getElementById('image').height+ "px");	
-//			document.getElementById('overlay').setAttribute('height', document.getElementById('image').width+ "px");	
-		},
-			
-			
+			rotate() {
+				document.getElementById('image').style.transform = "scaleX(-1)";
+				document.getElementById('image').style.transform = "rotateZ(90deg)";
+				document.getElementById('overlay').style.transform = "scaleX(-1)";
+				document.getElementById('overlay').style.transform = "rotateZ(90deg)";
+				//			document.getElementById('overlay').setAttribute('width', document.getElementById('image').height+ "px");	
+				//			document.getElementById('overlay').setAttribute('height', document.getElementById('image').width+ "px");	
+			},
 			startMirror() {
 				var canvas = document.getElementById('image');
 				var cc = canvas.getContext('2d');
@@ -141,7 +158,6 @@
 					document.getElementById('glass').setAttribute('src', model);
 					ctrack.start(document.getElementById('image'));
 					//run();
-				
 					drawLoop();
 					positionLoop();
 				}
@@ -180,8 +196,9 @@
 						}
 					}
 					if (positions && document.getElementById('glass').style != null) {
-					var xx2 = Math.atan(((ploca[1] - ploc[1]).toFixed(2)) / ((ploca[0] - ploc[0]).toFixed(2))) * (180 / Math.PI);
-					document.getElementById('glass').style.transform = "rotateZ(" + (xx2.toFixed(2)) + "deg)";}
+						var xx2 = Math.atan(((ploca[1] - ploc[1]).toFixed(2)) / ((ploca[0] - ploc[0]).toFixed(2))) * (180 / Math.PI);
+						document.getElementById('glass').style.transform = "rotateZ(" + (xx2.toFixed(2)) + "deg)";
+					}
 				}
 				// detect if tracker fails to find a face
 				document.addEventListener("clmtrackrNotFound", function(event) {
@@ -248,12 +265,11 @@
 										cc.drawImage(img, 0, 0, neww, newh);
 										this.cW = neww;
 										this.cH = newh;
-//											document.getElementById('image').style.transform = "scaleX(1)";	
-//				document.getElementById('image').style.transform = "rotateZ(90deg)";	
-//			document.getElementById('overlay').style.transform = "scaleX(1)";	
-//			document.getElementById('overlay').style.transform = "rotateZ(90deg)";	
+										//											document.getElementById('image').style.transform = "scaleX(1)";	
+										//				document.getElementById('image').style.transform = "rotateZ(90deg)";	
+										//			document.getElementById('overlay').style.transform = "scaleX(1)";	
+										//			document.getElementById('overlay').style.transform = "rotateZ(90deg)";	
 									} else {
-										
 										canvas.setAttribute('width', img.width);
 										canvas.setAttribute('height', img.height);
 										overlay.setAttribute('width', img.width);
@@ -261,10 +277,10 @@
 										cc.drawImage(img, 0, 0, img.width, img.height);
 										this.cW = img.width;
 										this.cH = img.height;
-//											document.getElementById('image').style.transform = "scaleX(1)";	
-//				document.getElementById('image').style.transform = "rotateZ(90deg)";	
-//			document.getElementById('overlay').style.transform = "scaleX(1)";	
-//			document.getElementById('overlay').style.transform = "rotateZ(90deg)";	
+										//											document.getElementById('image').style.transform = "scaleX(1)";	
+										//				document.getElementById('image').style.transform = "rotateZ(90deg)";	
+										//			document.getElementById('overlay').style.transform = "scaleX(1)";	
+										//			document.getElementById('overlay').style.transform = "rotateZ(90deg)";	
 									}
 								}
 								img.src = e.target.result;
@@ -275,6 +291,7 @@
 						document.getElementById('convergence').innerHTML = "";
 						ctrack.reset();
 					}
+					$('#containerx').removeClass('hide');
 				}
 				// set up file selector and variables to hold selections
 				var fileList, fileIndex;
@@ -304,8 +321,6 @@
 			},
 		},
 		mounted() {
-			
-			
 			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 			window.URL = window.URL || window.webkitURL || window.msURL || window.mozURL;
 			if (navigator.mediaDevices === undefined) {
@@ -327,8 +342,8 @@
 					return new Promise(function(resolve, reject) {
 						getUserMedia.call(navigator, constraints, resolve, reject);
 					});
-				}}
-	
+				}
+			}
 			if (navigator.mediaDevices) {
 				navigator.mediaDevices.getUserMedia({
 					video: true
@@ -383,7 +398,6 @@
 			}
 			//vid.addEventListener('canplay', enablestart, false);
 			// Trigger photo take
-		
 			document.getElementById("snap").addEventListener("click", function() {
 				var canvas = document.getElementById('image');
 				var cc = canvas.getContext('2d');
@@ -392,14 +406,12 @@
 				var dataurl = overlay1.toDataURL(vid.src);
 				//var img = document.getElementById("image");
 				//img.src = dataurl;
-				
+				$('#containerx').removeClass('hide');
 				//this.onFileChange($event);
 				var tt = document.getElementById("video")
-				tt.style.display = "none";
+				//tt.style.display = "none";
 				console.log('oi>>>>>> ', dataurl);
-				
 			});
-		
 			//console.log("Not Found.", this.$store.getters.isLoggedInAD );
 			this.startMirror();
 		},
@@ -414,54 +426,54 @@
 		},
 		components: {}
 	}
-	
 
 </script>
 <style scoped lang="scss">
 	@import url(https://fonts.googleapis.com/css?family=Lato:300italic,320italic,300,320);
+
 	#overlay {
 		position: absolute;
 		top: 0px;
 		left: 0px;
 		margin: 0;
-		border: 1px solid red;
-        
-        transform: scaleX(1);
-        -webkit-transform: scaleX(1);
-        transform: scaleY(1);
-        -webkit-transform: scaleY(1);
 		
+		transform: scaleX(1);
+		-webkit-transform: scaleX(1);
+		transform: scaleY(1);
+		-webkit-transform: scaleY(1);
 		-moz-transform: scaleX(1);
-        -o-transform: scaleX(1);
-        filter: FlipH;
-        -ms-filter: "FlipH";
-		image-orientation: flip;
+		-o-transform: scaleX(1);
+		filter: FlipH;
+		-ms-filter: "FlipH";
+		
 	}
 
 	#image {
-	
 		margin: 0;
 		top: 0px;
-		border: 3px solid green;
-       
-        transform: scaleX(1);
-        -webkit-transform: scaleX(1);
-        transform: scaleY(1);
-        -webkit-transform: scaleY(1);
+	
+		transform: scaleX(1);
+		-webkit-transform: scaleX(1);
+		transform: scaleY(1);
+		-webkit-transform: scaleY(1);
 		left: 0px;
 		-moz-transform: scaleX(1);
-        -o-transform: scaleX(1);
-        filter: FlipH;
-        -ms-filter: "FlipH";
-		image-orientation: flip;
+		-o-transform: scaleX(1);
+		filter: FlipH;
+		-ms-filter: "FlipH";
+		
 	}
+
 	#video {
-		position: absolute;
-		margin: 0;
-		top: 0px;
-		border: 3px solid blue;
-       
-       
+		position: relative;
+		
+		transform: scaleX(-1);
+		-webkit-transform: scaleX(-1);
+		-moz-transform: scaleX(-1);
+		-o-transform: scaleX(-1);
+		filter: FlipH;
+		-ms-filter: "FlipH";
+		image-orientation: flip;
 	}
 
 	#containerx {
@@ -469,13 +481,6 @@
 		display: flex;
 		/*width: 320px;*/
 		/*margin : 0px auto;*/
-	}
-
-	#content1 {
-		margin-top: 70px;
-		margin-left: 5px;
-		margin-right: 100px;
-		max-width: 950px;
 	}
 
 	#convergence {
@@ -489,7 +494,7 @@
 	.btn1 {
 		position: relative;
 		font-family: 'Lato';
-		font-size: 16px;
+		font-size: 8px;
 	}
 
 	.hide {
@@ -553,6 +558,5 @@
 	/*input[type=file]{ 
         color:transparent;
     }*/
-
 
 </style>

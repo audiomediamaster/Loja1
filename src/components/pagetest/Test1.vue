@@ -1,7 +1,17 @@
 <template>
-<div class="container">
- 
+<div class="containerw">
+  <v-navigation-drawer
+  	
+      v-model="drawer1"
     
+  :mini-variant="false"
+hide-overlay
+  app
+     clipped
+      right
+      width="400"
+      >
+   
   <table id="cart" class="table table-hover table-condensed">
     <thead>
       <tr>
@@ -21,9 +31,11 @@
       </tr>
       <tr>
         <td>
+         
           <button class="btn btn-warning" @click="saveShoppingCartLocal">
 							<i class="fa fa-angle-left"></i>Save and Continue Shopping
 						</button>
+     <v-btn class="caption" v-on:click="$emit('welcome')"  ><a>tt</a></v-btn>
         </td>
         <td colspan="2" class="hidden-xs"></td>
         <td class="hidden-xs text-center"><strong>Total ${{ totalValue }}</strong></td>
@@ -35,16 +47,26 @@
       </tr>
     </tfoot>
   </table>
- 
+  </v-navigation-drawer>
 </div>
 </template>
 <script>
+	 import {
+        eventHub
+    } from '@/main.js'
 	import {
 		mapActions,
 		mapGetters
 	} from 'vuex';
-	import CartItem from './cart/CartItem.vue';
+	import CartItem from '../cart/CartItem.vue';
 	export default {
+		props: ['drawer2'],
+		data(){
+			return{
+				 drawer1:false,
+			}
+			
+		},
 		computed: { ...mapGetters(['cartItemList', 'isLoggedIn', 'products', 'currentUser']),
 			totalValue() {
 				let res = 0;
@@ -52,8 +74,23 @@
 					res += item.price * item.quantity;
 				});
 				return res;
-			}
+			},
+/*		opn(){
+		this.$watch('drawer2', function (newValue, oldValue) {
+  // Esta função será executada quando `vm.a` mudar
+              console.log('>>geo>>  xxx  ',this.drawer2);       
+                    
+})
+		return this.drawer1;
+	}*/
 		},
+			 watch: {
+            drawer2: function(val) {
+                console.log(val);
+				eventHub.$emit('runn', val);
+           return this.drawer1 = val;
+            },
+			 },
 		components: {
 			appCartItem: CartItem
 		},
@@ -152,12 +189,17 @@
 						message: 'Please login to checkout'
 					});
 				}
-			}
+			},
+				
 		}
 	}
 
 </script>
 <style scoped="true" lang="scss">
+	.containerw{
+		
+		
+	}
 	.list-shopping-cart-leave-active {
 		transition: all 0.4s;
 	}

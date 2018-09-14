@@ -3,13 +3,13 @@
               <v-card color="cyan darken-2" class="white--text">
                 <v-layout>
                   <v-flex xs5>
-                    <v-card-media
+                    <v-img
                       :src="item.thumbnail_url"
                       height="125px"
                       contain
                       	alt="" 
                       	class="grow thumbnail-image"
-                    ></v-card-media>
+                    ></v-img>
                   </v-flex>
                   <v-flex xs7>
                     <v-card-title primary-title>

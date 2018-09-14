@@ -3,16 +3,23 @@
 
 <div  class="pi " :class="{'list-group-item': displayList}">
             <v-flex >
-              <v-card id="poc" width="18vw" class="back--text grey lighten-3 my-1 mx-1">
+               <v-hover>
+              <v-card id="poc" width="10vw" class="back--text grey lighten-3 my-1 mx-1"  slot-scope="{ hover }"
+      :class="`elevation-${hover ? 12 : 2}`">
+               	
                 <v-layout>
                   <v-flex >
-                    <v-card-media
+                    <v-img
                       :src="item.thumbnail_url"
                       height="10vh"
+                      	:aspect-ratio="1.4"
+                      position = "1em"
                       contain
                       	alt="" 
                       	class="grow thumbnail-image"
-                    ></v-card-media>
+                      		transition="slide-x-transition"
+                      	
+                    ></v-img>
             
                     <h4 class="ml-3">${{ item.price }}</h4>
                   </v-flex>
@@ -42,6 +49,7 @@
                   </v-flex>
                 </v-card-actions>
               </v-card>
+               </v-hover>
             </v-flex>
 </div>
 	
@@ -136,12 +144,12 @@ export default {
 .list-group-item {
  padding: 1%;
     float: left;
-     width: 40%;
+     width: 80%;
 	height: auto;
 	
 	#poc {
 		
-	 width: 80% !important;	
+	 width: 100% !important;	
 	}
 
 }

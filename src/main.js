@@ -61,6 +61,7 @@ router.beforeEach((to, from, next) => {
 
 */
 require('./IndexedDb/dbdata');
+export const eventHub = new Vue();
 new Vue({
   el: '#app',
   router,

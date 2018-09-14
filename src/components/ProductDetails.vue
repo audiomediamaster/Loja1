@@ -6,7 +6,7 @@
     </div>
     <div v-else class="thumbnail elevation-20">
  <v-card color="blue-grey darken-2" class="white--text">
-      <v-card-media class="img-responsive elevation-20" :src="item.thumbnail_url" alt=""  height="200px"></v-card-media>
+      <v-img class="img-responsive elevation-20" :src="item.thumbnail_url" alt=""  height="200px"></v-img>
 </v-card>
       <div class="caption-full">
         <h4 class="pull-right">$ {{ item.price }}</h4>

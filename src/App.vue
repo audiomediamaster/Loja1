@@ -42,7 +42,7 @@
         </v-list-tile-action>
       <router-link to="/user-profile"  v-if="isLoggedIn">Perfil</router-link>
       </v-list-tile>
-      <v-list-tile v-if="isLoggedInAD">
+      <v-list-tile >
         <v-list-tile-action>
           <v-icon>face</v-icon>
         </v-list-tile-action>
@@ -62,6 +62,7 @@
       </v-list-tile>
          </v-list>
     </v-navigation-drawer>
+    <test1 :drawer2="drawerx" v-on:welcome="sayHi"></test1>
     <v-toolbar
       app
       :clipped-left="clipped"
@@ -71,7 +72,11 @@
      
       <v-toolbar-title v-text="title" class="body-2"></v-toolbar-title>
       <v-spacer></v-spacer>
-     <app-header ></app-header>
+      <v-btn class="caption" to="/foto2"  ><a>foto2</a></v-btn>
+      
+      <v-btn class="caption" :to="'/mirror2/'+ cU "  ><a>mirro</a></v-btn>
+      <v-btn class="caption" @click.stop="drawerx = !drawerx"  ><a>test1</a></v-btn>
+     <app-header v-on:welcome="sayHi" ></app-header>
     </v-toolbar>
     <v-content class="desrelative">
       <router-view/>
@@ -84,20 +89,26 @@
 </template>
 
 <script>
-
+ import {
+        eventHub
+    } from '@/main.js';
 import { mapActions, mapGetters } from 'vuex';
   import Header from './components/Header.vue';
+  import Test1 from './components/pagetest/Test1.vue';
   import MessageComponent from './components/common/MessageComponent.vue';
   export default {
     components: {
       appHeader: Header,
-      MessageComponent
+      MessageComponent,
+		Test1
+		
     },
   name: 'App',
   data () {
     return {
       clipped: true,
       drawer: false,
+      drawerx: false,
       fixed: true,
       cU: 'gest',
       miniVariant: false,
@@ -106,9 +117,17 @@ import { mapActions, mapGetters } from 'vuex';
       title: 'Loja dO Oculos'
     }},
 methods: {
-      ...mapActions(['getShoppingCart', 'listenToProductList', 'listenToTransactionsList', 'logout'])
+      ...mapActions(['getShoppingCart', 'listenToProductList', 'listenToTransactionsList', 'logout']),
+	sayHi() {
+      alert('Hi!');
+    }
     },
     created() {
+		eventHub.$on('runn', function(val) {
+         
+          console.log('rummmmmmm  ', val);
+          
+      });
       let uid = this.$store.getters.currentUser.uid;
       this.listenToProductList();
       this.listenToTransactionsList();
